@@ -1,0 +1,37 @@
+{
+    "model": {
+        "type": "feature_v1",
+        "input_size": 512,
+        "feat_in": 256,
+        "mapping_out": 256,
+        "mapping_cond_dim": 512,
+        "has_variance": false,
+        "sigma_data": 0.6206,
+        "sigma_min": 0.000203,
+        "sigma_max": 665.1416,
+        "sigma_sample_density": {
+            "type": "lognormal",
+            "mean": -1.0,
+            "std": 1.5
+        },
+        "sampler": "lms"
+    },
+    "optimizer": {
+        "type": "adamw",
+        "lr": 2e-4,
+        "betas": [0.95, 0.999],
+        "eps": 1e-6,
+        "weight_decay": 1e-4
+    },
+    "lr_sched": {
+        "type": "inverse",
+        "inv_gamma": 20000.0,
+        "power": 1.0,
+        "warmup": 0.99
+    },
+    "ema_sched": {
+        "type": "inverse",
+        "power": 0.6667,
+        "max_value": 0.9999
+    }
+}
