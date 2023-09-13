@@ -7,7 +7,7 @@
 > [Anil Osman Tur](https://scholar.google.com/citations?user=W4yNf8UAAAAJ), [Nicola Dall'Asen](https://scholar.google.com/citations?user=e7lgiYYAAAAJ), [Cigdem Beyan](https://scholar.google.com/citations?user=VmjUxckAAAAJ), [Elisa Ricci](https://scholar.google.com/citations?user=xf1T870AAAAJ)<br>
 > University of Trento, Fondazione Bruno Kessler, Trento, Italy, <br>
 
-
+DOI: [10.1109/ICIP49359.2023.10222594](https://doi.org/10.1109/ICIP49359.2023.10222594)
 
 ## Installation
 
@@ -37,19 +37,14 @@ Please use the following BibTeX entry for citation.
 
 ```latex
 
-@InProceedings{tur2023exploring,
-  title = {Exploring Diffusion Models for Unsupervised Video Anomaly Detection},
-  author = {Tur, Anil Osman and Dall'Asen, Nicola and Beyan, Cigdem and Ricci, Elisa},
-  booktitle={2023 IEEE International Conference on Image Processing},
-  organization={IEEE},
-  year={2023}
-}
-
-@misc{tur2023exploring,
-  title={Exploring Diffusion Models for Unsupervised Video Anomaly Detection},
-  author={Tur, Anil Osman and Dall'Asen, Nicola and Beyan, Cigdem and Ricci, Elisa},
-  journal={arXiv preprint arXiv:2304.05841},
-  year={2023}
-}
+@INPROCEEDINGS{tur2023exploring,
+  author={Tur, Anil Osman and Dall’Asen, Nicola and Beyan, Cigdem and Ricci, Elisa},
+  booktitle={2023 IEEE International Conference on Image Processing (ICIP)}, 
+  title={Exploring Diffusion Models for Unsupervised Video Anomaly Detection}, 
+  year={2023},
+  volume={},
+  number={},
+  pages={2540-2544},
+  doi={10.1109/ICIP49359.2023.10222594}}
 
 ```
