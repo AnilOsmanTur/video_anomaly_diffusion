@@ -86,11 +86,6 @@ def args_parser():
     return p.parse_args()
 
 def main_objective(config_tune, args):
-    self_pretrain = False
-    anoamly_fit = False
-    neg_learning = True
-    coop = True
-    no_overlap = False
 
     config = K.config.load_config(open(args.config))
     model_config = config['model']
@@ -148,18 +143,11 @@ def main_objective(config_tune, args):
                               generator=torch.Generator().manual_seed(args.seed))
         torch.manual_seed(seeds[accelerator.process_index])
 
-    if coop:
-        gcl_dis = K.models.GCLModelDiscriminator(feat_size,
-                                                 neg_learning,
-                                                 coop)
-        gcl_dis = gcl_dis.to(device)
+
 
     # inner_model = K.config.make_model_aot(config)
     gcl_model = K.models.GCLModel(
         feat_size,
-        neg_learning,
-        coop,
-        no_overlap
     )
     if accelerator.is_main_process:
         from torch.utils.tensorboard import SummaryWriter
@@ -266,7 +254,7 @@ def main_objective(config_tune, args):
             x_0 = K.sampling.sample_lms(model_ema, x, sigmas, disable=True)
             return x_0
 
-        gen_preds, dis_preds, labels = K.evaluation.compute_eval_outs_aot(accelerator, sample_fn, test_size, test_dl)
+        gen_preds, labels, _, _ = K.evaluation.compute_eval_outs_aot(accelerator, sample_fn, test_dl)
         if accelerator.is_main_process:
 
             preds_auc = auroc(gen_preds, labels)
@@ -301,11 +289,7 @@ def main_objective(config_tune, args):
                     sigma = sample_density([reals.shape[0]], device=device)
                     g_losses = model_denoiser.loss(reals, noise, sigma) # losses with the batch
                     gen_dist = accelerator.gather(g_losses)
-
-                    d_loss = model.loss(batch, gen_dist)
-                    d_loss = accelerator.gather(d_loss)
-                    g_loss = gen_dist.mean()
-                    loss = g_loss + d_loss
+                    loss = gen_dist.mean()
                     accelerator.backward(loss)
                     if args.gns:
                         sq_norm_small_batch, sq_norm_large_batch = gns_stats_hook.get_stats()
