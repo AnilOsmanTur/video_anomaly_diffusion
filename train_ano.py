@@ -240,13 +240,14 @@ def main_objective(config_tune, args):
 
     @torch.no_grad()
     @K.utils.eval_mode(model_ema)
-    def evaluate():
+    def evaluate(n_start=0):
         if not evaluate_enabled:
             return
         if accelerator.is_main_process:
             tqdm.write('Evaluating...')
         sigmas = K.sampling.get_sigmas_karras(10, sigma_min, sigma_max, rho=7., device=device)
-        sample_noise = torch.randn([1, feat_size], device=device) * sigma_max
+        sigmas = sigmas[n_start:]
+        sample_noise = torch.randn([1, feat_size], device=device) * sigmas[0]
 
         def sample_fn(x_real):
             x_real = x_real.to(device)
